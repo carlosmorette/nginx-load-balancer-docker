@@ -8,7 +8,7 @@ logging.getLogger().setLevel(logging.INFO)
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        logging.warning("I was called: " + PORT)
+        logging.info("I was called: " + PORT)
         self.write("Hello, world: " + PORT)
 
 def make_app():

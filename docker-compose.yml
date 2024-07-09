@@ -1,25 +1,33 @@
 services:
   app1:
     build: .
-    ports:
-      - 8888:8888
+    #ports:
+    #  - 8888:8888
     environment:
       - PYTHON_APP_PORT=8888
+    networks:
+      - loadbalancing
 
   app2:
     build: .
-    ports:
-      - 8000:8000
+    #ports:
+    #  - 8000:8000
     environment:
       - PYTHON_APP_PORT=8000
+    networks:
+      - loadbalancing
   
   nginx:
-    build: 
-      context: .
-      dockerfile: Dockerfile.nginx
+    image: nginx:1.27.0-alpine
+    volumes:
+      - "./nginx.conf:/etc/nginx/nginx.conf"
     ports:
       - 80:80
-
     depends_on:
       - app1
       - app2
+    networks:
+      - loadbalancing
+
+networks:
+  loadbalancing:
