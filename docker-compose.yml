@@ -1,0 +1,25 @@
+services:
+  app1:
+    build: .
+    ports:
+      - 8888:8888
+    environment:
+      - PYTHON_APP_PORT=8888
+
+  app2:
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      - PYTHON_APP_PORT=8000
+  
+  nginx:
+    build: 
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - 80:80
+
+    depends_on:
+      - app1
+      - app2
